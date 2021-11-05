@@ -13,7 +13,7 @@ const Services = () => {
     {
       name: "Fluoride Treatment",
       description:
-        "Fluoride is an inorganic, monatomic anion of fluorine, with the chemical formula F⁻ , whose salts are typically white or colorless. Fluoride salts typically have distinctive bitter tastes, and are odorless.",
+        "Fluoride treatments are typically professional treatments containing a high concentration of fluoride that a dentist or hygienist will apply to a person's teeth to improve health and reduce the risk of cavities. These in-office treatments may take the form of a solution, gel, foam, or varnish.",
       img: fluoride,
     },
     {
@@ -25,7 +25,7 @@ const Services = () => {
     {
       name: "Whitening Teeth",
       description:
-        "Teeth whitening isn't permanent. It can lasts up to 3 years – it varies from person to person. The whitening effect won't last as long if you smoke or drink red ...",
+        "Teeth whitening isn't permanent. It can lasts up to 3 years – it varies from person to person. The whitening effect won't last as long if you smoke or drink red. Teeth whitening involves bleaching your teeth to make them lighter. It can't make your teeth brilliant white, but it can lighten the existing colour by several shades.",
       img: whitening,
     },
   ];
