@@ -41,12 +41,13 @@ const Register = () => {
           xs={12}
           md={6}
         >
-          <Typography sx={{ mt: 10 }} variant="body1" gutterBottom>
+          <Typography sx={{ mt: 8 }} variant="body1" gutterBottom>
             REGISTER
           </Typography>
           {!isLoading && (
             <form onSubmit={handleLoginSubmit} sx={{ mt: 12 }}>
               <TextField
+                required
                 sx={{ width: "75%", m: 1 }}
                 id="standard-basic"
                 label="Name"
@@ -55,6 +56,7 @@ const Register = () => {
                 variant="standard"
               />
               <TextField
+                required
                 sx={{ width: "75%", m: 1 }}
                 id="standard-basic"
                 label="Email"
@@ -64,6 +66,7 @@ const Register = () => {
                 variant="standard"
               />
               <TextField
+                required
                 sx={{ width: "75%", m: 1 }}
                 id="standard-basic"
                 label="Password"
@@ -73,6 +76,7 @@ const Register = () => {
                 variant="standard"
               />
               <TextField
+                required
                 sx={{ width: "75%", m: 1 }}
                 id="standard-basic"
                 label="Confirm Password"
@@ -98,17 +102,25 @@ const Register = () => {
           {user?.email && (
             <Alert
               severity="success"
-              sx={{ width: "75%", textAlign: "center" }}
+              sx={{ width: "90%", textAlign: "center" }}
             >
               <Typography variant="body1">
                 You have successfully registered. Please login.
               </Typography>
             </Alert>
           )}
-          {authError && <Alert severity="error">{authError}</Alert>}
+          {authError && (
+            <Alert severity="error" sx={{ width: "90%", textAlign: "center" }}>
+              {authError}
+            </Alert>
+          )}
         </Grid>
         <Grid item xs={12} md={6}>
-          <img style={{ width: "100%" }} src={login} alt="" />
+          <img
+            style={{ width: "100%", marginTop: "10px" }}
+            src={login}
+            alt=""
+          />
         </Grid>
       </Grid>
     </Container>

@@ -48,6 +48,7 @@ const Login = () => {
           </Typography>
           <form onSubmit={handleLoginSubmit}>
             <TextField
+              required
               sx={{ width: "75%", m: 1 }}
               id="standard-basic"
               label="Email"
@@ -56,6 +57,7 @@ const Login = () => {
               variant="standard"
             />
             <TextField
+              required
               sx={{ width: "75%", m: 1 }}
               id="standard-basic"
               label="Password"
@@ -81,20 +83,29 @@ const Login = () => {
             </NavLink>
             {isLoading && <CircularProgress />}
             {user?.email && (
-              <Alert severity="success" sx={{ width: "95%" }}>
+              <Alert severity="success" sx={{ width: "90%", mb: 1 }}>
                 <Typography variant="body1">
                   Welcome {user.displayName}
                 </Typography>
               </Alert>
             )}
-            {authError && <Alert severity="error">{authError}</Alert>}
+            {authError && (
+              <Alert severity="error" sx={{ width: "90%", mb: 1 }}>
+                {authError}
+              </Alert>
+            )}
           </form>
+          <p>--------------------------OR--------------------------</p>
           <Button onClick={handleGoogleSignIn} variant="contained">
             Google Sign In
           </Button>
         </Grid>
         <Grid item xs={12} md={6}>
-          <img style={{ width: "100%" }} src={login} alt="" />
+          <img
+            style={{ width: "100%", marginTop: "10px" }}
+            src={login}
+            alt=""
+          />
         </Grid>
       </Grid>
     </Container>

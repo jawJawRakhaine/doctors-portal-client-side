@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import useAuth from "../../../hooks/useAuth";
 
 const style = {
   position: "absolute",
@@ -17,13 +18,52 @@ const style = {
   borderRadius: 5,
 };
 
-const BookingModal = ({ openBooing, handleBookingClose, booking, date }) => {
+const BookingModal = ({
+  openBooing,
+  handleBookingClose,
+  booking,
+  date,
+  setBookingSuccess,
+}) => {
   const { name, time } = booking;
+  const { user } = useAuth();
+  const initiaInfo = {
+    patientName: user.displayName,
+    email: user.email,
+    phone: "",
+  };
+  const [bookingInfo, setBookingInfo] = useState(initiaInfo);
+  const handleOnBlur = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newBookingInfo = { ...bookingInfo };
+    newBookingInfo[field] = value;
+    setBookingInfo(newBookingInfo);
+  };
   const handleBookSubmit = (e) => {
-    alert("Booking Successful");
+    const appointment = {
+      ...bookingInfo,
+      date: date.toLocaleDateString(),
+      time,
+      serviceName: name,
+    };
+    // send booking info to server
+    fetch("http://localhost:5000/appointments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(appointment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          setBookingSuccess(true);
+          handleBookingClose();
+        }
+      });
     // collect data from form
     // send data to server
-    handleBookingClose();
     e.preventDefault();
   };
   return (
@@ -59,21 +99,29 @@ const BookingModal = ({ openBooing, handleBookingClose, booking, date }) => {
           <TextField
             sx={{ m: 2, width: "90%" }}
             label="Name"
+            name="patientName"
+            onBlur={handleOnBlur}
             id="outlined-size-small"
-            // defaultValue="Name"
+            defaultValue={user.displayName}
             size="small"
           />
           <TextField
             sx={{ m: 2, width: "90%" }}
             label="Email"
+            name="email"
+            onBlur={handleOnBlur}
             id="outlined-size-small"
-            // defaultValue={user.displayEmail}
+            defaultValue={user.email}
             size="small"
           />
           <TextField
+            required
             sx={{ m: 2, width: "90%" }}
             label="Phone Number"
             id="outlined-size-small"
+            onBlur={handleOnBlur}
+            name="phone"
+            type="number"
             // defaultValue="Phone Number"
             size="small"
           />

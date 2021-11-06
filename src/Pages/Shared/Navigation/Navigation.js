@@ -34,23 +34,28 @@ const Navigation = () => {
           </Link>
 
           {user?.email ? (
-            <Button onClick={logout} color="inherit">
-              Logout{" "}
-              {user?.photoURL ? (
-                <img
-                  src={user.photoURL}
-                  alt="user"
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    marginLeft: "10px",
-                  }}
-                />
-              ) : (
-                user?.displayName
-              )}
-            </Button>
+            <Box>
+              <NavLink style={{ textDecoration: "none" }} to="/dashboard">
+                <Button color="inherit">Dashboard</Button>
+              </NavLink>
+              <Button onClick={logout} color="inherit">
+                Logout{" "}
+                {user?.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="user"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      marginLeft: "10px",
+                    }}
+                  />
+                ) : (
+                  user?.displayName
+                )}
+              </Button>
+            </Box>
           ) : (
             <NavLink style={{ textDecoration: "none" }} to="/login">
               <Button color="inherit">Login</Button>
