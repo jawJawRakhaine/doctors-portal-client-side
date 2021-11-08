@@ -27,12 +27,12 @@ const BookingModal = ({
 }) => {
   const { name, time } = booking;
   const { user } = useAuth();
-  const initiaInfo = {
+  const initialInfo = {
     patientName: user.displayName,
     email: user.email,
     phone: "",
   };
-  const [bookingInfo, setBookingInfo] = useState(initiaInfo);
+  const [bookingInfo, setBookingInfo] = useState(initialInfo);
   const handleOnBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -134,7 +134,7 @@ const BookingModal = ({
             size="small"
           />
           <Button sx={{ width: "90%", m: 2 }} type="submit" variant="contained">
-            get Appointment
+            get appointment
           </Button>
         </form>
       </Box>

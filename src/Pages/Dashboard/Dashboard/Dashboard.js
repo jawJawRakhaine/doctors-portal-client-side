@@ -15,17 +15,21 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Button, Grid } from "@mui/material";
-import Calendar from "../../Shared/Calendar/Calendar";
-import Appointments from "../Appointments/Appointments";
-import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
+import DashboardHome from "../../Dashboard/DashboardHome/DashboardHome.js";
+import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import MakeAdmin from "./MakeAdmin/MakeAdmin.js";
+import AddDoctor from "../AddDoctor/AddDoctor.js";
+import useAuth from "../../../hooks/useAuth.js";
+import AdminRoute from "../../Login/AdminRoute/AdminRoute.js";
 
 const drawerWidth = 240;
 
 function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
+  let { path, url } = useRouteMatch();
+  const { admin } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -40,11 +44,44 @@ function Dashboard(props) {
         <Button
           color="inherit"
           variant="contained"
-          sx={{ mx: 2, mb: 2, mt: 2 }}
+          sx={{ mx: 2, mb: 1, mt: 2, width: "90%" }}
         >
           Appointment
         </Button>
       </Link>
+
+      <Link style={{ textDecoration: "none" }} to={`${url}`}>
+        <Button
+          color="inherit"
+          variant="contained"
+          sx={{ mx: 2, mb: 1, mt: 1, width: "90%" }}
+        >
+          Dashboard
+        </Button>
+      </Link>
+      {admin && (
+        <Box>
+          <Link style={{ textDecoration: "none" }} to={`${url}/makeAdmin`}>
+            <Button
+              color="inherit"
+              variant="contained"
+              sx={{ mx: 2, mb: 1, mt: 1, width: "90%" }}
+            >
+              Make Admin
+            </Button>
+          </Link>
+
+          <Link style={{ textDecoration: "none" }} to={`${url}/addDoctor`}>
+            <Button
+              color="inherit"
+              variant="contained"
+              sx={{ mx: 2, mb: 1, mt: 1, width: "90%" }}
+            >
+              Add Doctor
+            </Button>
+          </Link>
+        </Box>
+      )}
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem button key={text}>
@@ -132,23 +169,17 @@ function Dashboard(props) {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          <Grid container spacing={3}>
-            <Grid
-              sx={{ boxShadow: 2, borderRadius: 2, mt: 5, ml: 2 }}
-              item
-              xs={12}
-              sm={12}
-              md={3}
-              lg={3}
-            >
-              <Calendar date={date} setDate={setDate} />
-            </Grid>
-            <Grid sx={{ mt: 5 }} item xs={12} sm={12} md={8} lg={8}>
-              <Appointments date={date} />
-            </Grid>
-          </Grid>
-        </Typography>
+        <Switch>
+          <Route exact path={path}>
+            <DashboardHome />
+          </Route>
+          <AdminRoute path={`${path}/makeAdmin`}>
+            <MakeAdmin />
+          </AdminRoute>
+          <AdminRoute path={`${path}/addDoctor`}>
+            <AddDoctor />
+          </AdminRoute>
+        </Switch>
       </Box>
     </Box>
   );

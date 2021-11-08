@@ -11,12 +11,16 @@ import useAuth from "../../../hooks/useAuth";
 import { Typography } from "@mui/material";
 
 const Appointments = ({ date }) => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`;
-    fetch(url)
+    fetch(url, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setAppointments(data));
   }, [date]);
@@ -26,7 +30,7 @@ const Appointments = ({ date }) => {
         variant="h4"
         sx={{ color: "info.main", fontWeight: 600, mt: 5, mb: 5 }}
       >
-        Appointments
+        You have total {appointments.length} Appointments
       </Typography>
       <TableContainer component={Paper}>
         <Table sx={{}} aria-label="Appointments table">
