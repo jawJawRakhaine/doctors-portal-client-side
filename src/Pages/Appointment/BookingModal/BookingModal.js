@@ -48,7 +48,7 @@ const BookingModal = ({
       serviceName: name,
     };
     // send booking info to server
-    fetch("http://localhost:5000/appointments", {
+    fetch("https://murmuring-ridge-39950.herokuapp.com/appointments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
