@@ -25,7 +25,7 @@ const BookingModal = ({
   date,
   setBookingSuccess,
 }) => {
-  const { name, time } = booking;
+  const { name, time, price } = booking;
   const { user } = useAuth();
   const initialInfo = {
     patientName: user.displayName,
@@ -45,6 +45,7 @@ const BookingModal = ({
       ...bookingInfo,
       date: date.toLocaleDateString(),
       time,
+      price,
       serviceName: name,
     };
     // send booking info to server
@@ -122,7 +123,6 @@ const BookingModal = ({
             onBlur={handleOnBlur}
             name="phone"
             type="number"
-            // defaultValue="Phone Number"
             size="small"
           />
           <TextField
@@ -131,6 +131,14 @@ const BookingModal = ({
             label="Appointment Date"
             id="outlined-size-small"
             defaultValue={date.toDateString()}
+            size="small"
+          />
+          <TextField
+            sx={{ m: 2, width: "90%" }}
+            disabled
+            label="Appointment Fees"
+            id="outlined-size-small"
+            defaultValue={price}
             size="small"
           />
           <Button sx={{ width: "90%", m: 2 }} type="submit" variant="contained">
